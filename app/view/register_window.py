@@ -49,7 +49,7 @@ class RegisterWindow(Window):
         self.qqLabel = BodyLabel("QQ号", self)
         self.qqLineEdit = LineEdit(self)
 
-        self.activateCodeLabel = BodyLabel("激活码", self)
+        self.activateCodeLabel = BodyLabel("动态密钥", self)
         self.activateCodeLineEdit = PasswordLineEdit(self)
 
         self.rememberCheckBox = CheckBox("记住我", self)
