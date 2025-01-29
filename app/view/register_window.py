@@ -152,7 +152,7 @@ class RegisterWindow(Window):
         self.liscenseThread.resultSignal.connect(self._vaildateLogin)
         self.liscenseThread.finished.connect(lambda: self.liscenseThread.deleteLater())
         self.liscenseThread.start()
-        logger.info("开始验证激活码")
+        logger.info("开始验证动态密钥")
 
     def _vaildateLogin(self, result):
         if not result:
@@ -167,7 +167,7 @@ class RegisterWindow(Window):
         else:
             InfoBar.success(
                 "激活成功",
-                "恭喜您，激活成功！",
+                "恭喜您，验证成功！",
                 position=InfoBarPosition.TOP,
                 parent=self.window(),
             )
