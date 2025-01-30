@@ -19,7 +19,7 @@ from qfluentwidgets import SmoothScrollArea
 
 from ..components.flow_layout import FlowLayout
 from ..components.disclaimer_card import DisclaimerCard
-
+#zip文件转换工具在file_to_base64.py里
 
 # 瀑布流布局,用于加载功能板块
 class HomeScrollArea(SmoothScrollArea):
