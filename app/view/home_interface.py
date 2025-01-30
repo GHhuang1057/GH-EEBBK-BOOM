@@ -1,7 +1,14 @@
 # coding: utf-8
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import (
+    QWidget,
+    QHBoxLayout,
+    QVBoxLayout,
+    QLabel,
+    QTextEdit,
+    QPushButton,
+)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 
@@ -9,6 +16,7 @@ from loguru import logger
 from qfluentwidgets import SmoothScrollArea
 
 from ..components.flow_layout import FlowLayout
+from ..components.disclaimer_card import DisclaimerCard
 
 
 # 瀑布流布局,用于加载功能板块
@@ -41,7 +49,7 @@ class HomeScrollArea(SmoothScrollArea):
         self.layouts = FlowLayout(self.widgets)
         self.layouts.setContentsMargins(0, 5, 0, 5)
         self.widgets.setLayout(self.layouts)
-    
+
     def addSubWidget(self, widget) -> None:
         """
         addSubWidget 添加子控件到流式布局中
@@ -51,103 +59,20 @@ class HomeScrollArea(SmoothScrollArea):
         self.layouts.addWidget(widget)
 
 
-# Home页面
-#这里是我(huang1057)修改的
-#添加了一个布局
-#如果代码不能运行，就把以下的注释恢复
-#class HomeInterface(QWidget):
-    #def __init__(self, parent=None):
-        #super().__init__(parent=parent)
-        #self.__initWidget()
-
-    #def __initWidget(self):
-        #self.setObjectName("HomeInterface")
-
-        #self.__initLayout()
-
-    #def __initLayout(self):
-        #pass
-
-
 class HomeInterface(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
+
+        self.vBoxLayout = QVBoxLayout(self)
+
+        self.disclaimerCard = DisclaimerCard(self)
+
         self.__initWidget()
-        self.__addWidgets()
 
     def __initWidget(self):
         self.setObjectName("HomeInterface")
         self.__initLayout()
 
     def __initLayout(self):
-        # 创建一个垂直布局
-        self.main_layout = QVBoxLayout(self)
-        self.main_layout.setContentsMargins(0, 0, 0, 0)  # 设置布局的边距
-        self.main_layout.setSpacing(0)  # 设置布局中控件之间的间距
-
-        # 添加免责声明控件
-        self.disclaimer_label = QLabel("免责声明", self)
-        self.disclaimer_label.setStyleSheet("font-size: 16px; font-weight: bold;")
-        self.main_layout.addWidget(self.disclaimer_label)
-
-        self.disclaimer_text = QTextEdit(self)
-        self.disclaimer_text.setReadOnly(True)  # 设置为只读
-        self.disclaimer_text.setHtml(
-            """
-            <p>本软件仅供学习和研究使用，未经授权不得用于商业用途。</p>
-            <p>用户使用本软件时，应遵守相关法律法规。</p>
-            <p>开发者不承担因使用本软件而产生的任何法律责任。</p>
-            """
-        )
-        self.main_layout.addWidget(self.disclaimer_text)
-
-        # 创建 HomeScrollArea 并将其添加到主布局中
-        self.scroll_area = HomeScrollArea(self)
-        self.main_layout.addWidget(self.scroll_area)
-
-    def __addWidgets(self):
-        # 动态添加子控件到 HomeScrollArea 的流式布局中
-        for i in range(5):  # 添加 5 个按钮作为示例
-            button = QPushButton(f"按钮 {i + 1}")
-            self.scroll_area.addSubWidget(button)class HomeInterface(QWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent=parent)
-        self.__initWidget()
-        self.__addWidgets()
-
-    def __initWidget(self):
-        self.setObjectName("HomeInterface")
-        self.__initLayout()
-
-    def __initLayout(self):
-        # 创建一个垂直布局
-        self.main_layout = QVBoxLayout(self)
-        self.main_layout.setContentsMargins(0, 0, 0, 0)  # 设置布局的边距
-        self.main_layout.setSpacing(0)  # 设置布局中控件之间的间距
-
-        # 添加免责声明控件
-        self.disclaimer_label = QLabel("免责声明", self)
-        self.disclaimer_label.setStyleSheet("font-size: 16px; font-weight: bold;")
-        self.main_layout.addWidget(self.disclaimer_label)
-
-        self.disclaimer_text = QTextEdit(self)
-        self.disclaimer_text.setReadOnly(True)  # 设置为只读
-        self.disclaimer_text.setHtml(
-            """
-            <p>本软件仅供学习和研究使用，未经授权不得用于商业用途。</p>
-            <p>用户使用本软件时，应遵守相关法律法规。</p>
-            <p>所有解除安装限制的家教机都可以回到初始状态</p>
-            <p>开发者不承担因使用本软件而产生的任何法律责任。</p>
-            """
-        )
-        self.main_layout.addWidget(self.disclaimer_text)
-
-        # 创建 HomeScrollArea 并将其添加到主布局中
-        self.scroll_area = HomeScrollArea(self)
-        self.main_layout.addWidget(self.scroll_area)
-
-    def __addWidgets(self):
-        # 动态添加子控件到 HomeScrollArea 的流式布局中
-        for i in range(5):  # 添加 5 个按钮作为示例
-            button = QPushButton(f"按钮 {i + 1}")
-            self.scroll_area.addSubWidget(button)
+        self.vBoxLayout.addWidget(self.disclaimerCard, 0, Qt.AlignmentFlag.AlignTop)
+      
