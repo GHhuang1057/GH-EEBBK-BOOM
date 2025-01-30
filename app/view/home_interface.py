@@ -52,6 +52,23 @@ class HomeScrollArea(SmoothScrollArea):
 
 
 # Home页面
+#这里是我(huang1057)修改的
+#添加了一个布局
+#如果代码不能运行，就把以下的注释恢复
+#class HomeInterface(QWidget):
+    #def __init__(self, parent=None):
+        #super().__init__(parent=parent)
+        #self.__initWidget()
+
+    #def __initWidget(self):
+        #self.setObjectName("HomeInterface")
+
+        #self.__initLayout()
+
+    #def __initLayout(self):
+        #pass
+
+
 class HomeInterface(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
@@ -59,8 +76,14 @@ class HomeInterface(QWidget):
 
     def __initWidget(self):
         self.setObjectName("HomeInterface")
-
         self.__initLayout()
 
     def __initLayout(self):
-        pass
+        # 创建一个垂直布局
+        self.main_layout = QVBoxLayout(self)
+        self.main_layout.setContentsMargins(0, 0, 0, 0)  # 设置布局的边距
+        self.main_layout.setSpacing(0)  # 设置布局中控件之间的间距
+
+        # 创建 HomeScrollArea 并将其添加到主布局中
+        self.scroll_area = HomeScrollArea(self)
+        self.main_layout.addWidget(self.scroll_area)
