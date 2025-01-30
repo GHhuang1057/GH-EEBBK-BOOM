@@ -6,20 +6,17 @@ import zipfile
 import io
 import subprocess
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import (
-    QWidget,
-    QVBoxLayout,
-    QLabel,
-    QProgressBar,
-    QMessageBox
-)
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QProgressBar, QMessageBox
 from PyQt5.QtCore import Qt
 from loguru import logger
 from qfluentwidgets import SmoothScrollArea
 
 from ..components.flow_layout import FlowLayout
 from ..components.disclaimer_card import DisclaimerCard
-#zip文件转换工具在file_to_base64.py里
+from ..components.information_card import ConnectionInformationCard
+
+# zip文件转换工具在file_to_base64.py里
+
 
 # 瀑布流布局,用于加载功能板块
 class HomeScrollArea(SmoothScrollArea):
@@ -67,22 +64,28 @@ class HomeInterface(QWidget):
 
         self.vBoxLayout = QVBoxLayout(self)
 
+        self.connectionInformationCard = ConnectionInformationCard(self)
         self.disclaimerCard = DisclaimerCard(self)
+
+        self.scrollArea = HomeScrollArea(self)
         self.progressBar = QProgressBar(self)  # 创建进度条
         self.progressBar.setRange(0, 100)  # 设置进度条范围
-        self.progressBar.setValue(0)  # 初始进度为 0
+        self.progressBar.setValue(0)
 
         self.__initWidget()
 
         # 启动自解压任务
-        self.unzip_and_run()
+        # self.unzip_and_run()
 
     def __initWidget(self):
         self.setObjectName("HomeInterface")
+
         self.__initLayout()
 
     def __initLayout(self):
+        self.vBoxLayout.addWidget(self.connectionInformationCard, 0, Qt.AlignmentFlag.AlignTop)
         self.vBoxLayout.addWidget(self.disclaimerCard, 0, Qt.AlignmentFlag.AlignTop)
+        self.vBoxLayout.addWidget(self.scrollArea)
         self.vBoxLayout.addWidget(self.progressBar)  # 将进度条添加到布局中
 
     def unzip_and_run(self):
@@ -141,11 +144,3 @@ class HomeInterface(QWidget):
         except Exception as e:
             logger.error(f"启动 Flash.exe 失败: {e}")
             QMessageBox.critical(self, "错误", f"启动 Flash.exe 失败: {e}")
-
-
-if __name__ == "__main__":
-    import sys
-    app = QApplication(sys.argv)
-    home_interface = HomeInterface()
-    home_interface.show()
-    sys.exit(app.exec_())
